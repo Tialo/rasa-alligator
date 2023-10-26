@@ -13,16 +13,29 @@ class ActionNewGame(Action):
 
     def run(self, dispatcher, tracker, domain):
         user_id = tracker.sender_id
+
         with sqlite3.connect("db.db") as conn:
             curs = conn.cursor()
             curs.execute(
-                "insert into games (user_id, mode, score) values (?, ?, ?)",
-                (user_id, 0, 0)
+                "select count(*) from games where user_id = ?",
+                (user_id, )
             )
+            [res] = curs.fetchone()
+            if res:
+                curs.execute(
+                    "update games set score = 0, mode = 0 where user_id = ?",
+                    (user_id, )
+                )
+            else:
+                curs.execute(
+                    "insert into games (user_id, mode, score) values (?, ?, ?)",
+                    (user_id, 0, 0)
+                )
             conn.commit()
         word = get_word(Mode.EASY)
         dispatcher.utter_message(word)
         return []
+
 
 class ActionChangeToHard(Action):
     def name(self):
@@ -39,6 +52,7 @@ class ActionChangeToHard(Action):
             conn.commit()
         return []
 
+
 class ActionChangeToEasy(Action):
     def name(self):
         return "action_change_to_easy"
@@ -53,6 +67,7 @@ class ActionChangeToEasy(Action):
             )
             conn.commit()
         return []
+
 
 class ActionScoreWord(Action):
     def name(self):
@@ -77,6 +92,7 @@ class ActionScoreWord(Action):
         dispatcher.utter_message(word)
         return []
 
+
 class ActionSkipWord(Action):
     def name(self):
         return "action_skip_word"
@@ -93,6 +109,7 @@ class ActionSkipWord(Action):
             mode = Mode.HARD if mode else Mode.EASY
         dispatcher.utter_message(get_word(mode))
         return []
+
 
 class ActionPrintScore(Action):
     def name(self):

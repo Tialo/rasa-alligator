@@ -22,10 +22,12 @@ stories:
 - story: Засчитать словош
   steps:
   - intent: score_word
+  - action: utter_score_word
   - action: action_score_word
 - story: Пропустить слово
   steps:
   - intent: skip_word
+  - action: utter_skip_word
   - action: action_skip_word
 - story: Напечатать счет
   steps:

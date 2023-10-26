@@ -2,5 +2,6 @@ actions/db.db
 models
 venv
 .rasa
+.DS_Store
 credentials.yml
 *__pycache__
