@@ -1,0 +1,38 @@
+version: "3.1"
+intents:
+  - new_game
+  - change_to_hard
+  - change_to_easy
+  - print_rules
+  - score_word
+  - skip_word
+  - print_score
+
+
+actions:
+  - action_new_game
+  - action_change_to_hard
+  - action_change_to_easy
+  - action_score_word
+  - action_skip_word
+  - action_print_score
+
+session_config:
+  session_expiration_time: 6
+  carry_over_slots_to_new_session: false
+
+responses:
+  utter_new_game:
+  - text: "новая игра началась! У вас 0 очков."
+
+  utter_change_to_hard:
+  - text: "Режим: сложный"
+
+  utter_change_to_easy:
+  - text: "Режим: легкий"
+
+  utter_print_rules:
+  - text: "ляляля правила"
+
+  utter_default:
+  - text: "Извините, я не могу понять ваш запрос. Пожалуйста, повторите еще раз."

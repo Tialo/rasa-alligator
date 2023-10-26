@@ -1,0 +1,11 @@
+version: "3.1"
+rules:
+  - rule: Новая игра
+    steps:
+    - intent: new_game
+    - action: utter_new_game
+    - action: action_new_game
+  - rule: fallback
+    steps:
+      - intent: nlu_fallback
+      - action: utter_default
